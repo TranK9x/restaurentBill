@@ -1,5 +1,4 @@
 #include <iostream>
-//#include <cmath>	// round
 #include <iomanip> //setprecision and fixed manipulators
 
 #define SUBCHARGE_RATE 0.05 
@@ -10,28 +9,26 @@ void caculate_subcharge(double subtotal, double& subcharge);
 void caculate_tax(double subtotal, double subcharge, double& tax);
 void caculate_total(double subtotal, double subcharge, double tax, double& total);
 void print_bill(double subtotal, double subcharge, double tax, double total);
-double roundTake2NumDecimal(double a);
 
 int main() {
-	double subtotal, subcharge, tax, total,b;
-
+	std::cout << std::fixed << std::setprecision(2);
+	double subtotal, subcharge, tax, total;
 	input_recieve(subtotal);
-	//std::cout << subtotal << std::endl;
 	caculate_subcharge(subtotal, subcharge);
-	//std::cout << subcharge << std::endl;
 	caculate_tax(subtotal, subcharge, tax);
-	//std::cout << tax << std::endl;
 	caculate_total(subtotal, subcharge, tax, total);
-	//std::cout << total << std::endl;
 	print_bill(subtotal, subcharge, tax, total);
 	
 }
+
+
 //
 //This module recieve input from user
 //
 void input_recieve(double &subtotal) {
 	std::cout << "Enter subtotal: ";
 	std::cin >> subtotal;
+	//this loop will validate input, if user dont enter a number, ask user reenter
 	while (true) {
 		//check if input operation failed
 		if (std::cin.fail()) { //if fail
@@ -45,26 +42,32 @@ void input_recieve(double &subtotal) {
 		}
 	}
 }
+
+
 //
 //this module caculate the subchager
 //
 void caculate_subcharge(double subtotal, double &subcharge) {
 	subcharge = subtotal * SUBCHARGE_RATE;
-	subcharge = roundTake2NumDecimal(subcharge);
 }
+
+
 //
 //this module caculate tax of subtotal +subcharge
 //
 void caculate_tax(double subtotal, double subcharge, double& tax) {
 	tax = (subcharge + subtotal) * TAX_RATE;
-	tax = roundTake2NumDecimal(tax);
 }
+
+
 //
 //this module caculate total bill
 //
 void caculate_total(double subtotal, double subcharge, double tax, double& total) {
 	total = subcharge + subtotal + tax;
 }
+
+
 //
 //this module print out the bill
 //
@@ -73,13 +76,4 @@ void print_bill(double subtotal, double subcharge, double tax, double total) {
 	std::cout << "Lingving Wage Subcharge(5.00%): $" << subcharge << std::endl;
 	std::cout << "Tax(8.75%): $" << tax << std::endl;
 	std::cout << "Total: $" << total << std::endl;
-}
-
-//This function will round a double number to 2 decimal place
-double roundTake2NumDecimal(double a) {
-	// Set the precision to 2 decimal places
-	std::cout << std::fixed << std::setprecision(2);
-	// Round to 2 decimal places
-	//a = std::round(a * 100) / 100;
-	return a;
 }
